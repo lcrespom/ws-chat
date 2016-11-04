@@ -29,12 +29,13 @@ app.use(function (req, res) {
 // -------------------- WS server --------------------
 let wss = new WebSocketServer({ server });
 wss.on('connection', function connection(ws) {
-	let location = url.parse(ws.upgradeReq.url, true);
-	console.log('connection from', location);
-
 	ws.on('message', function incoming(message) {
 		console.log('received: %s', message);
+		for (let clt of wss.clients)
+			if (clt != ws)
+				clt.send(message);
 	});
+	console.log('connection from', ws);
 	ws.send('hello');
 });
 
