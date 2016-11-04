@@ -1,5 +1,4 @@
 let server = require('http').createServer();
-let url = require('url');
 let WebSocketServer = require('ws').Server;
 
 let express = require('express');
@@ -7,23 +6,11 @@ let app = express();
 let port = 1337;
 
 // -------------------- HTTP server --------------------
-let index_html = `
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>WebSockets chat</title>
-	<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-</head>
-<body>
-	Welcome to ws-chat
-</body>
-</html>
-`;
 
 app.use(function (req, res) {
 	res.statusCode = 200;
 	res.setHeader('Content-Type', 'text/html');
-	res.end(index_html);
+	res.sendFile(process.cwd() + '/web' + req.url);
 });
 
 // -------------------- WS server --------------------
