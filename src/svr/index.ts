@@ -22,7 +22,7 @@ wss.on('connection', function connection(ws) {
 			if (clt != ws)
 				clt.send(message);
 	});
-	console.log('connection from', ws);
+	console.log('connection from WebSocket', ws && ws.upgradeReq ? ws.upgradeReq.headers : '');
 	ws.send('hello');
 });
 
